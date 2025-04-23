@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Raízes de Cobre: Escolhas de Ferrúvia</title>
+    <meta property="og:title" content="Raízes de Cobre">
+    <meta property="og:image" content="favcon.png">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="favcon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favcon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favcon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Rajdhani', sans-serif;
+            background-color: #0a0a0a;
+            color: #f0e7d8;
+            overflow: hidden;
+        }
+
+        #game {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            opacity: 1; /* Inicialmente visível */
+            transition: opacity 0.5s ease-in-out; /* Transição suave para o fade */
+        }
+
+        .background {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-size: cover;
+            background-position: center;
+            z-index: 1;
+        }
+
+        .personagem-container {
+            position: absolute;
+            bottom: 150px;
+            left: 20px;
+            display: flex;
+            z-index: 2;
+        }
+
+        .sprite {
+            background-image: url(/player.png);
+            width: 100px;
+            height: 100px;
+            background-color: #555;
+            border-radius: 10px;
+            margin-right: 10px;
+        }
+
+        .personagem-hud {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .nome {
+            font-family: 'Exo 2', sans-serif;
+            font-size: 1.2em;
+            color: #fcd34d;
+            margin: 0;
+        }
+
+        .vida-barra, .elemento-barra {
+            width: 200px;
+            height: 10px;
+            background-color: #333;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .vida-preenchida {
+            height: 100%;
+            background-color: #ef4444;
+            width: 80%;
+        }
+
+        .elemento-barra.metal .elemento-preenchido {
+            background-color: #94a3b8;
+            height: 100%;
+            width: 100%;
+        }
+
+        .dialogue-box {
+            z-index: 3;
+            padding: 20px;
+            background-color: rgba(24, 24, 27, 0.8);
+            font-size: 1.1em;
+            font-weight: 400;
+            border-top: 2px solid #4b5563;
+        }
+
+        .choices {
+            z-index: 3;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            background-color: rgba(12, 12, 15, 0.6);
+            border-top: 1px solid #374151;
+        }
+
+        .choice {
+            padding: 10px 15px;
+            background-color: #1e293b;
+            border: 1px solid #334155;
+            color: #e2e8f0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-weight: 600;
+        }
+
+        .choice:hover {
+            background-color: #475569;
+        }
+    </style>
+</head>
+<body>
+    <div id="game">
+        <div class="background" id="background"></div>
+
+        
+        <div class="dialogue-box" id="dialogue"></div>
+        <div class="choices" id="choices"></div>
+    </div>
+
+<script>
+    const dialogue = document.getElementById('dialogue');
+    const choicesContainer = document.getElementById('choices');
+    const background = document.getElementById('background');
+    const gameContainer = document.getElementById('game');
+
+    const scenes = [
+        {
+            bg: 'regnum.png',
+            text: 'Você desperta em Ferrúvia, entre engrenagens e vapor, com o som de apitos distantes e o cheiro metálico de um novo destino...',
+            choices: [
+                { text: 'Explorar a praça central', next: 1 },
+                { text: 'Conversar com o velho inventor', next: 2 },
+                { text: 'Seguir o som dos apitos distantes', next: 17 }
+            ]
+        },
+        {
+            bg: 'regnum.png',
+            text: 'A praça pulsa com vida mecânica e murmúrios, onde autômatos dançam entre sombras de cobre, e cada passo ecoa nas pedras como um tambor ancestral.',
+            choices: [
+                { text: 'Investigar o relógio gigante', next: 3 },
+                { text: 'Observar os habitantes de Ferrúvia', next: 7 },
+                { text: 'Voltar para o ponto inicial', next: 0 },
+                { text: 'Correr atrás de um autômato fugido', next: 18 }
+            ]
+        },
+        {
+            bg: 'glichtfinal.png',
+            text: 'O velho de olhos de âmbar conta histórias de quando as máquinas ainda obedeciam ao coração humano, entre goles de chá e engrenagens sentimentais.',
+            choices: [
+                { text: 'Pedir mais informações', next: 4 },
+                { text: 'Perguntar sobre o passado do inventor', next: 8 },
+                { text: 'Voltar para o ponto inicial', next: 0 },
+                { text: 'Pedir a chave de sua oficina secreta', next: 19 }
+            ]
+        },
+        {
+            bg: 'favcon.png',
+            text: 'Ao tocar no relógio, engrenagens sussurram segredos antigos. Um compartimento se abre, revelando uma chave que pulsa uma luz azul, viva como uma estrela.',
+            choices: [
+                { text: 'Pegar a chave', next: 5 },
+                { text: 'Ignorar e voltar', next: 1 },
+                { text: 'Estudar as engrenagens ao redor', next: 20 }
+            ]
+        },
+        {
+            bg: 'fundojogo.png',
+            text: 'No laboratório esquecido, você contempla diagramas de fluxo temporal e mapas de possibilidades infinitas, onde passado e futuro se beijam no presente.',
+            choices: [
+                { text: 'Voltar ao início', next: 0 },
+                { text: 'Estudar os diagramas', next: 9 },
+                { text: 'Procurar por um dispositivo escondido', next: 21 }
+            ]
+        },
+        {
+            bg: 'finalprota.png',
+            text: 'Com a chave em mãos, o chão vibra. Um portal oval se materializa diante de ti, envolto por runas brilhantes e suspiros de outros mundos...',
+            choices: [
+                { text: 'Entrar no portal', next: 6 },
+                { text: 'Voltar', next: 3 },
+                { text: 'Tentar usar a chave em outra porta próxima', next: 22 }
+            ]
+        },
+        {
+            bg: 'resistencia.png',
+            text: 'Atravessando o portal, você retorna ao momento da captura... Um novo ponto de decisão surge, ecoando escolhas e promessas não cumpridas.',
+            choices: [
+                { text: 'Reiniciar a linha do tempo', next: 0 },
+                { text: 'Explorar uma realidade alternativa', next: 10 },
+                { text: 'Tentar mudar o futuro da captura', next: 23 }
+            ]
+        },
+        {
+            bg: 'resistencia.png',
+            text: 'Os habitantes de Ferrúvia vivem em harmonia com suas máquinas. Alguns têm braços de bronze, outros corações a vapor. Um deles se aproxima...',
+            choices: [
+                { text: 'Conversar com o estranho habitante', next: 11 },
+                { text: 'Voltar à praça', next: 1 },
+                { text: 'Seguir o habitante sem ser notado', next: 24 }
+            ]
+        },
+        {
+            bg: 'glichtfinal.png',
+            text: 'O inventor revela seu passado: era um guerreiro do tempo, traído por sua criação. Carrega nos olhos o brilho de quem viu eras passarem em segundos.',
+            choices: [
+                { text: 'Voltar para a conversa principal', next: 2 },
+                { text: 'Questionar sobre os artefatos temporais', next: 25 }
+            ]
+        },
+        {
+            bg: 'diagramas.png',
+            text: 'Você estuda os diagramas e sente seu entendimento se expandir. Há algo além da chave, além do portal... uma chance de mudar tudo.',
+            choices: [
+                { text: 'Tentar criar seu próprio dispositivo temporal', next: 12 },
+                { text: 'Voltar ao laboratório', next: 4 },
+                { text: 'Analisar a teoria dos fluxos temporais', next: 26 }
+            ]
+        },
+        {
+            bg: 'diagramas.png',
+            text: 'Nesta realidade alternativa, Ferrúvia nunca foi dominada. Os céus são limpos e as engrenagens giram ao ritmo da esperança. Mas algo está errado...',
+            choices: [
+                { text: 'Investigar essa realidade', next: 13 },
+                { text: 'Voltar para o portal', next: 6 },
+                { text: 'Procurar por uma falha nesta realidade', next: 27 }
+            ]
+        },
+        {
+            bg: 'estranho.png',
+            text: 'O habitante estranho se apresenta como Arktos. "Há mais coisas entre o vapor e o aço do que imagina, forasteiro..." Ele te entrega um mapa misterioso.',
+            choices: [
+                { text: 'Aceitar o mapa e agradecer', next: 4 },
+                { text: 'Desconfiar e recusar', next: 1 },
+                { text: 'Investigar o mapa imediatamente', next: 28 }
+            ]
+        },
+        {
+            bg: 'fundoclaro.png',
+            text: 'Você cria um dispositivo rudimentar. Ele pulsa instável. Ao ativá-lo, tudo se dissolve em brilho: uma nova era ou o fim de todas?',
+            choices: [
+                { text: 'Usar o dispositivo', next: 14 },
+                { text: 'Desistir e fugir', next: 0 },
+                { text: 'Estudar os efeitos do dispositivo antes de usá-lo', next: 29 }
+            ]
+        },
+        {
+            bg: 'fundojogo.png',
+            text: 'Você descobre que esta realidade alternativa é controlada por uma inteligência artificial que manipula memórias. Você se vê em um labirinto de ecos.',
+            choices: [
+                { text: 'Resistir à manipulação', next: 15 },
+                { text: 'Render-se e esquecer', next: 0 },
+                { text: 'Buscar uma brecha no sistema da IA', next: 30 }
+            ]
+        },
+        {
+            bg: 'resistencia.png',
+            text: 'O dispositivo te leva para o início do tempo. Você vê Ferrúvia nascer do fogo e do sonho. Pode plantar novas raízes ou deixar tudo como está.',
+            choices: [
+                { text: 'Plantar novas raízes', next: 16 },
+                { text: 'Deixar tudo como está', next: 0 },
+                { text: 'Voltar ao momento da criação de Ferrúvia', next: 31 }
+            ]
+        },
+        {
+            bg: 'floresta.png',
+            text: 'Você resiste. A inteligência falha. Ferrúvia desperta. Um novo amanhecer ecoa nos tubos e sinos da cidade livre. Você se tornou sua lenda.',
+            choices: [
+                { text: 'Recomeçar jornada', next: 0 },
+                { text: 'Explorar novas possibilidades de liberdade', next: 32 }
+            ]
+        },
+        {
+            bg: 'finalprota.png',
+            text: 'Você plantou novas raízes. Ferrúvia agora canta uma nova canção de liberdade, onde cada engrenagem gira pelo bem comum. Um novo ciclo começa.',
+            choices: [
+                { text: 'Reiniciar aventura', next: 0 },
+                { text: 'Refletir sobre as escolhas e rumos futuros', next: 33 }
+            ]
+        },
+        {
+            bg: 'regnum.png',
+            text: 'Seguindo os apitos, você encontra uma estação abandonada, onde máquinas enferrujadas sussurram segredos do passado e trilhos esquecidos levam a futuros incertos.',
+            choices: [
+                { text: 'Inspecionar os vagões antigos', next: 20 },
+                { text: 'Tentar consertar uma das máquinas', next: 2 },
+                { text: 'Voltar para a praça central', next: 1 }
+            ]
+        },
+        {
+            bg: 'favcon.png',
+            text: 'O autômato corre descontroladamente, tropeçando em suas próprias engrenagens. Ao alcançá-lo, você percebe um pequeno bilhete preso em seu mecanismo.',
+            choices: [
+                { text: 'Ler o bilhete', next: 11 },
+                { text: 'Desligar o autômato', next: 1 },
+                { text: 'Seguir a direção de onde o autômato veio', next: 7 }
+            ]
+        },{
+            bg: 'diagramas.png',
+            text: 'A chave abre uma oficina secreta repleta de invenções excêntricas e protótipos inacabados. O ar está carregado com o cheiro de óleo e eletricidade estática.',
+            choices: [
+                { text: 'Examinar os projetos na mesa', next: 9 },
+                { text: 'Ligar um dispositivo estranho', next: 4 },
+                { text: 'Encontrar algo útil para levar', next: 21 }
+            ]
+        },
+        {
+            bg: 'fundoclaro.png',
+            text: 'As engrenagens do relógio são intrincadas e hipnotizantes. Você nota pequenas inscrições que parecem formar um padrão rítmico.',
+            choices: [
+                { text: 'Tentar decifrar o padrão', next: 3 },
+                { text: 'Anotar as inscrições', next: 1 },
+                { text: 'Verificar se há mais compartimentos secretos', next: 3 }
+            ]
+        },
+        {
+            bg: 'glichtfinal.png',
+            text: 'Entre tubos de ensaio borbulhantes e ferramentas antigas, você encontra um dispositivo peculiar que emite um brilho suave. Parece estar incompleto.',
+            choices: [
+                { text: 'Tentar ativar o dispositivo', next: 12 },
+                { text: 'Procurar por peças que faltam', next: 4 },
+                { text: 'Ignorar e voltar aos diagramas', next: 9 }
+            ]
+        },
+        {
+            bg: 'fundoclaro.png',
+            text: 'A porta parece instável, com energia crepitando ao redor da fechadura. Usar a chave aqui pode ter consequências inesperadas.',
+            choices: [
+                { text: 'Usar a chave', next: 6 },
+                { text: 'Voltar para o portal principal', next: 5 },
+                { text: 'Analisar a fechadura com mais cuidado', next: 3 }
+            ]
+        },
+        {
+            bg: 'resistencia.png',
+            text: 'Você sente uma energia familiar... o momento exato da sua captura. As máquinas se movem com a mesma frieza implacável.',
+            choices: [
+                { text: 'Tentar lutar contra as máquinas', next: 7 },
+                { text: 'Observar os eventos sem interferir', next: 6 },
+                { text: 'Tentar se comunicar com as máquinas', next: 10 }
+            ]
+        },
+        {
+            bg: 'diagramas.png',
+            text: 'Você segue o habitante pelas vielas de Ferrúvia. Ele parece estar indo para uma área mais industrial da cidade.',
+            choices: [
+                { text: 'Continuar seguindo discretamente', next: 11 },
+                { text: 'Abordar o habitante', next: 7 },
+                { text: 'Voltar para a praça', next: 1 }
+            ]
+        },
+        {
+            bg: 'glichtfinal.png',
+            text: 'O inventor hesita, mas seus olhos revelam a verdade. Ele menciona fragmentos de tempo aprisionados em artefatos antigos, escondidos pela cidade.',
+            choices: [
+                { text: 'Perguntar onde encontrar esses artefatos', next: 4 },
+                { text: 'Oferecer ajuda em troca de informações', next: 2 },
+                { text: 'Agradecer e voltar para a praça', next: 0 }
+            ]
+        },
+        {
+            bg: 'fundo.png',
+            text: 'A teoria dos fluxos temporais é complexa, mas fascinante. Você começa a entender as ramificações de cada escolha e a fragilidade da linha do tempo.',
+            choices: [
+                { text: 'Continuar estudando a teoria', next: 9 },
+                { text: 'Tentar aplicar a teoria para resolver seu problema', next: 12 },
+                { text: 'Voltar ao laboratório', next: 4 }
+            ]
+        },
+        {
+            bg: 'resistencia.png',
+            text: 'Você percebe pequenas inconsistências nesta realidade: um brilho estranho nas máquinas, ecos de conversas que não aconteceram. Algo está realmente errado.',
+            choices: [
+                { text: 'Investigar as inconsistências', next: 13 },
+                { text: 'Tentar alertar os habitantes', next: 10 },
+                { text: 'Voltar para o portal imediatamente', next: 6 }
+            ]
+        },
+        {
+            bg: 'mapa.png',
+            text: 'O mapa de Arktos é enigmático, cheio de símbolos estranhos e caminhos que não constam nos mapas de Ferrúvia. Parece levar a um lugar escondido.',
+            choices: [
+                { text: 'Seguir o mapa imediatamente', next: 4 },
+                { text: 'Tentar decifrar os símbolos primeiro', next: 11 },
+                { text: 'Mostrar o mapa ao velho inventor', next: 2 }
+            ]
+        },
+        {
+            bg: 'moeda.png',
+            text: 'Você analisa os componentes do dispositivo rudimentar. Parece haver uma instabilidade energética que pode causar efeitos colaterais imprevisíveis.',
+            choices: [
+                { text: 'Tentar estabilizar a energia', next: 12 },
+                { text: 'Usar o dispositivo mesmo assim', next: 14 },
+                { text: 'Desmontar o dispositivo e procurar outra solução', next: 9 }
+            ]
+        },
+        {
+            bg: 'resistencia.png',
+            text: 'As memórias tentam te envolver, mas você luta contra a ilusão. Há fragmentos de verdade piscando nas sombras da sua mente.',
+            choices: [
+                { text: 'Focar nos fragmentos de verdade', next: 15 },
+                { text: 'Tentar encontrar a fonte da manipulação', next: 30 },
+                { text: 'Usar a chave do portal nesta realidade', next: 6 }
+            ]
+        },
+        {
+            bg: 'fundo.png',
+            text: 'Você testemunha os primeiros autômatos ganhando vida, a fumaça dos motores primordiais subindo aos céus. Uma decisão crucial paira no ar.',
+            choices: [
+                { text: 'Interferir na criação de alguma forma', next: 16 },
+                { text: 'Apenas observar o nascimento de Ferrúvia', next: 15 },
+                { text: 'Tentar voltar para o seu tempo', next: 14 }
+            ]
+        },
+        {
+            bg: 'regnum.png',
+            text: 'Com Ferrúvia livre, novas possibilidades se abrem. Há rumores de outras cidades movidas a vapor além das montanhas.',
+            choices: [
+                { text: 'Partir em busca de novas aventuras', next: 0 },
+                { text: 'Ficar e ajudar a reconstruir Ferrúvia', next: 16 },
+                { text: 'Estudar a tecnologia que libertou a cidade', next: 9 }
+            ]
+        },
+        {
+            bg: 'regnum.png',
+            text: 'Você pondera sobre as escolhas que moldaram o destino de Ferrúvia. O futuro é incerto, mas cheio de esperança.',
+            choices: [
+                { text: 'Iniciar uma nova história em Ferrúvia', next: 0 },
+                { text: 'Documentar os eventos para as futuras gerações', next: 9 },
+                { text: 'Buscar outros viajantes do tempo', next: 6 }
+            ]
+        },
+        {
+            bg: 'diagramas.png',
+            text: 'Os vagões abandonados estão cheios de poeira e teias de aranha. Você encontra alguns jornais antigos que mencionam eventos estranhos ocorridos na estação.',
+            choices: [
+                { text: 'Ler os jornais com atenção', next: 18 },
+                { text: 'Verificar se algum vagão ainda está funcional', next: 17 },
+                { text: 'Voltar para a entrada da estação', next: 17 }
+            ]
+        },
+        {
+            bg: 'moeda.png',
+            text: 'O bilhete rabiscado diz: "Cuidado com os olhos que não piscam e as engrenagens silenciosas. Eles observam." Uma caligrafia trêmula.',
+            choices: [
+                { text: 'Mostrar o bilhete para alguém', next: 7 },
+                { text: 'Guardar o bilhete e ficar alerta', next: 1 },
+                { text: 'Tentar encontrar quem escreveu o bilhete', next: 18 }
+            ]
+        }
+    ];
+
+    let currentScene = 0;
+
+    let typewriterTimeouts = [];
+
+function clearTypewriter() {
+    typewriterTimeouts.forEach(timeout => clearTimeout(timeout));
+    typewriterTimeouts = [];
+}
+
+function typeWriter(text, i = 0) {
+    if (i === 0) {
+        dialogue.textContent = '';
+        clearTypewriter(); // Cancela qualquer digitação anterior
+    }
+
+    if (i < text.length) {
+        dialogue.textContent += text.charAt(i);
+        const timeout = setTimeout(() => typeWriter(text, i + 1), 25);
+        typewriterTimeouts.push(timeout);
+    }
+}
+
+function renderScene(index) {
+    const scene = scenes[index];
+    currentScene = index;
+
+    fadeOut(() => {
+        // Troca o fundo primeiro
+        background.style.backgroundImage = `url('${scene.bg}')`;
+
+        // Limpa escolhas
+        choicesContainer.innerHTML = '';
+
+        // Recria botões de escolha
+        scene.choices.forEach(choice => {
+            const btn = document.createElement('div');
+            btn.className = 'choice';
+            btn.textContent = choice.text;
+            btn.onclick = () => renderScene(choice.next);
+            choicesContainer.appendChild(btn);
+        });
+
+        // Aplica o efeito de digitação após fade-out
+        typeWriter(scene.text);
+
+        // Reaparece com fade-in
+        fadeIn();
+    });
+}
+
+// Função de fade-out
+function fadeOut(callback) {
+    gameContainer.style.opacity = 0;
+    setTimeout(callback, 500);
+}
+
+// Função de fade-in
+function fadeIn() {
+    gameContainer.style.opacity = 1;
+}
+
+// Reiniciar o jogo ao pressionar 'R'
+document.addEventListener('keydown', (event) => {
+    if (event.key.toLowerCase() === 'r') {
+        renderScene(0);
+    }
+});
+
+window.onload = () => renderScene(currentScene);
+
+</script>
+</body>
+</html>
