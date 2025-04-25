@@ -134,6 +134,76 @@
         <div class="dialogue-box" id="dialogue"></div>
         <div class="choices" id="choices"></div>
     </div>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    background-color: black;
+    color: #00FF00;
+    font-family: 'Courier New', Courier, monospace;
+    overflow: hidden;
+  }
+
+  #codec-container {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 300px;
+    background-color: rgba(0, 0, 0, 0.8);
+    border: 2px solid #00FF00;
+    padding: 10px;
+    border-radius: 10px;
+  }
+
+  .message {
+    margin-bottom: 10px;
+    animation: type 2s steps(40) 1 normal both;
+  }
+
+  @keyframes type {
+    from { width: 0; }
+    to { width: 100%; }
+  }
+
+  .speaker {
+    font-weight: bold;
+    margin-top: 5px;
+  }
+</style>
+
+
+<div id="codec-container">
+  <div class="message" id="msg"></div>
+  <div class="speaker" id="speaker"></div>
+</div>
+
+<script>
+  const dialogo = [
+    { texto: "ferruvia ira renascer mesmo que custe todos os nossos companheiros ", falante: "Coronel rufino" },
+    { texto: "ha um carregamento gigante ido para altiora", falante: "Dr Anemoi" },
+    { texto: "estou no aguardo mas sera que vale a pena", falante: "Arauto numero 7" },
+    { texto: "eu e o doutor fizemos isso e nos arrependemos muito", falante: "Coronel rufino" },
+    { texto: "o carregamento de bonerius foi interceptado pelos seres da mata ", falante: "Dr Anemoi" },
+    { texto: "eles querem reviver os outros?", falante: "Arauto numero 7" },
+    { texto: "provavelmente e eu troço por eles a Regnum ta fora de controle ", falante: "Dr Anemoi" }
+  ];
+
+  let i = 0;
+
+  function mostrarMensagem() {
+    if (i < dialogo.length) {
+      document.getElementById('msg').innerText = dialogo[i].texto;
+      document.getElementById('speaker').innerText = dialogo[i].falante;
+      i++;
+      setTimeout(mostrarMensagem, 3000);
+    } else {
+      i = 0;
+      setTimeout(mostrarMensagem, 3000);
+    }
+  }
+
+  mostrarMensagem();
+</script>
 
 <script>
     const dialogue = document.getElementById('dialogue');
@@ -182,7 +252,7 @@
         },
         {
             bg: 'fundojogo.png',
-            text: 'No laboratório esquecido, você contempla diagramas de fluxo temporal e mapas de possibilidades infinitas, onde passado e futuro se beijam no presente.',
+            text: 'No laboratório esquecido, você contempla diagramas de fluxo temporal e encontra o primeiro bonerius e também  mapas de possibilidades infinitas, onde passado e futuro se beijam no presente.',
             choices: [
                 { text: 'Voltar ao início', next: 0 },
                 { text: 'Estudar os diagramas', next: 9 },
@@ -209,7 +279,7 @@
         },
         {
             bg: 'resistencia.png',
-            text: 'Os habitantes de Ferrúvia vivem em harmonia com suas máquinas. Alguns têm braços de bronze, outros corações a vapor. Um deles se aproxima...',
+            text: 'Os habitantes de Ferrúvia vivem em harmonia com suas máquinas os cardavernius nunca foram criados. Alguns têm braços de bronze, outros corações a vapor. Um deles se aproxima...',
             choices: [
                 { text: 'Conversar com o estranho habitante', next: 11 },
                 { text: 'Voltar à praça', next: 1 },
