@@ -129,8 +129,10 @@
 <body>
     <div id="game">
         <div class="background" id="background"></div>
-
-        
+             <div id="codec-container">
+              <div class="message" id="msg"></div>
+              <div class="speaker" id="speaker"></div>
+            </div>
         <div class="dialogue-box" id="dialogue"></div>
         <div class="choices" id="choices"></div>
     </div>
@@ -157,7 +159,7 @@
 
   .message {
     margin-bottom: 10px;
-    animation: type 2s steps(40) 1 normal both;
+    animation: type 4s steps(40) 1 normal both;
   }
 
   @keyframes type {
@@ -172,10 +174,7 @@
 </style>
 
 
-<div id="codec-container">
-  <div class="message" id="msg"></div>
-  <div class="speaker" id="speaker"></div>
-</div>
+
 
 <script>
   const dialogo = [
