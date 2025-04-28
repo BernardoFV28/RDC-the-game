@@ -5,7 +5,6 @@
     <title>Raízes de Cobre: Escolhas de Ferrúvia</title>
     <meta property="og:title" content="Raízes de Cobre">
     <meta property="og:image" content="favcon.png">
-
     <link rel="apple-touch-icon" sizes="180x180" href="favcon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="favcon.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favcon.png">
@@ -125,7 +124,7 @@
         }
 
         .dialogue-box {
-            z-index: 3;
+            z-index: 5;
             padding: 20px;
             background-color: rgba(24, 24, 27, 0.8);
             font-size: 1.1em;
@@ -230,7 +229,7 @@
         // Função para mostrar uma cena específica, de acordo com o índice
         function mostrarCena(cenaIndex) {
             // Aqui você pode manipular a exibição das cenas de maneira personalizada
-            console.log(`Carregando cena: ${cenaIndex}`);
+            console.log(`Carregando cena: ${scenes}`);
             // Exemplo: carrega os elementos dessa cena aqui (por exemplo, mostrar ou ocultar divs)
             toggleVisibility('dialogue', true);
             toggleVisibility('choices', true);
