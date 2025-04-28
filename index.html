@@ -154,6 +154,7 @@
         .choice:hover {
             background-color: #475569;
         }
+        .hidden { display: none; }
     </style>
 </head>
 <body>
@@ -187,7 +188,6 @@ function toggleVisibility(elementId, isVisible) {
 
 // Adiciona a classe "hidden" ao CSS para controlar a visibilidade
 // No seu CSS, adicione:
-// .hidden { display: none; }
 
 document.getElementById('botao-iniciar').addEventListener('click', function() {
   toggleVisibility('tela-inicio', false);  // Oculta a tela inicial
