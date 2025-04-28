@@ -20,7 +20,36 @@
             color: #f0e7d8;
             overflow: hidden;
         }
+#tela-inicio {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 
+#logo {
+  max-width: 90%;
+  height: auto;
+  margin-bottom: 30px;
+}
+
+#botao-iniciar {
+  background-color: #5c4033;
+  color: #f0e6d2;
+  padding: 15px 30px;
+  font-size: 1.2em;
+  border: 2px solid #c49b66;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#botao-iniciar:hover {
+  background-color: #7b5e42;
+  transform: scale(1.05);
+  box-shadow: 0 0 15px #c49b66;
+}
         #game {
             position: relative;
             width: 100vw;
