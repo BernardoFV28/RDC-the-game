@@ -21,36 +21,37 @@
             overflow: hidden;
         }
         #tela-inicio {
-          height: 100vh;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
-        
+
         #logo {
-          max-width: 70%;
-          height: 60%;
-          margin-bottom: 30px;
-            z-index:1;
+            max-width: 70%;
+            height: 60%;
+            margin-bottom: 30px;
+            z-index: 1;
         }
-        
+
         #botao-iniciar {
-          background-color: #5c4033;
-          color: #f0e6d2;
-          padding: 15px 30px;
-          font-size: 1.2em;
-          border: 2px solid #c49b66;
-          border-radius: 15px;
-          cursor: pointer;
-          transition: 0.3s;
+            background-color: #5c4033;
+            color: #f0e6d2;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border: 2px solid #c49b66;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: 0.3s;
         }
-        
+
         #botao-iniciar:hover {
-          background-color: #7b5e42;
-          transform: scale(1.05);
-          box-shadow: 0 0 15px #c49b66;
+            background-color: #7b5e42;
+            transform: scale(1.05);
+            box-shadow: 0 0 15px #c49b66;
         }
+
         #game {
             position: relative;
             width: 100vw;
@@ -58,14 +59,16 @@
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
-            opacity: 1; /* Inicialmente visível */
-            transition: opacity 0.5s ease-in-out; /* Transição suave para o fade */
+            opacity: 1;
+            transition: opacity 0.5s ease-in-out;
         }
 
         .background {
             position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background-size: cover;
             background-position: center;
             z-index: 1;
@@ -128,6 +131,7 @@
             font-size: 1.1em;
             font-weight: 400;
             border-top: 2px solid #4b5563;
+            transition: opacity 0.5s ease-in-out;
         }
 
         .choices {
@@ -154,53 +158,83 @@
         .choice:hover {
             background-color: #475569;
         }
+
         .hidden { display: none; }
+
+        #codec-container {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 290px;
+            background-color: rgba(0, 0, 0, 0.8);
+            border: 2px solid #00FF00;
+            padding: 10px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            color: #00FF00;
+            z-index: 10;
+        }
+
+        .message {
+            margin-bottom: 10px;
+            animation: type 2s steps(40) 1 normal both;
+        }
+
+        @keyframes type {
+            from {
+                width: 0;
+            }
+            to {
+                width: 100%;
+            }
+        }
+
+        .speaker {
+            font-weight: bold;
+            margin-top: 5px;
+        }
     </style>
 </head>
 <body>
-      <div id="tela-inicio">
-    <img src="capa.png" id="logo">
-    <button id="botao-iniciar">Entrar em Ferrúvia</button>
-  </div>
-    <div id="game">
-              <div id="tela-inicio">
-                <img src="capa.png" id="logo">
-                <button id="botao-iniciar">Entrar em Ferrúvia</button>
-              </div>
-        <div class="background" id="background"></div>
-             <div id="codec-container">
-              <div class="message" id="msg"></div>
-              <div class="speaker" id="speaker"></div>
-            </div>
-        <div class="dialogue-box" id="dialogue"></div>
-        <div class="choices" id="choices"></div>
+    <div id="tela-inicio">
+        <img src="capa.png" id="logo">
+        <button id="botao-iniciar">Entrar em Ferrúvia</button>
     </div>
-    <script> 
-// Função para ocultar e mostrar elementos de forma mais flexível
-function toggleVisibility(elementId, isVisible) {
-  const element = document.getElementById(elementId);
-  if (isVisible) {
-    element.classList.remove('hidden');
-  } else {
-    element.classList.add('hidden');
-  }
-}
+    <div id="game" class="hidden">
+        <div class="background" id="background"></div>
+        <div id="codec-container">
+            <div class="message" id="msg"></div>
+            <div class="speaker" id="speaker"></div>
+        </div>
+        <div class="dialogue-box hidden" id="dialogue"></div>
+        <div class="choices hidden" id="choices"></div>
+    </div>
 
-// Adiciona a classe "hidden" ao CSS para controlar a visibilidade
-// No seu CSS, adicione:
+    <script>
+        // Função para ocultar e mostrar elementos de forma mais flexível
+        function toggleVisibility(elementId, isVisible) {
+            const element = document.getElementById(elementId);
+            if (isVisible) {
+                element.classList.remove('hidden');
+            } else {
+                element.classList.add('hidden');
+            }
+        }
 
-document.getElementById('botao-iniciar').addEventListener('click', function() {
-  toggleVisibility('tela-inicio', false);  // Oculta a tela inicial
-  toggleVisibility('game', true);           // Exibe a tela do jogo
-  mostrarCena(0);                          // Carrega a primeira cena
-});
+        document.getElementById('botao-iniciar').addEventListener('click', function() {
+            toggleVisibility('tela-inicio', false);  // Oculta a tela inicial
+            toggleVisibility('game', true);           // Exibe a tela do jogo
+            mostrarCena(0);                          // Carrega a primeira cena
+        });
 
-// Função para mostrar uma cena específica, de acordo com o índice
-function mostrarCena(cenaIndex) {
-  // Aqui você pode manipular a exibição das cenas de maneira personalizada
-  console.log(`Carregando cena: ${cenaIndex}`);
-  // Exemplo: carrega os elementos dessa cena aqui (por exemplo, mostrar ou ocultar divs)
-}
+        // Função para mostrar uma cena específica, de acordo com o índice
+        function mostrarCena(cenaIndex) {
+            // Aqui você pode manipular a exibição das cenas de maneira personalizada
+            console.log(`Carregando cena: ${cenaIndex}`);
+            // Exemplo: carrega os elementos dessa cena aqui (por exemplo, mostrar ou ocultar divs)
+            toggleVisibility('dialogue', true);
+            toggleVisibility('choices', true);
+        }
     </script>
 <style>
 
