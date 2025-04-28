@@ -129,11 +129,86 @@
 <body>
     <div id="game">
         <div class="background" id="background"></div>
-
-        
+             <div id="codec-container">
+              <div class="message" id="msg"></div>
+              <div class="speaker" id="speaker"></div>
+            </div>
         <div class="dialogue-box" id="dialogue"></div>
         <div class="choices" id="choices"></div>
     </div>
+<style>
+
+    #codec-container {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      width: 290px;
+      background-color: rgba(0, 0, 0, 0.8);
+      border: 2px solid #00FF00;
+      padding: 10px;
+      border-radius: 10px;
+      font-family: 'Courier New', monospace;
+      color: #00FF00;
+      z-index: 10;
+    }
+
+    .message {
+      margin-bottom: 10px;
+      animation: type 2s steps(40) 1 normal both;
+    }
+
+    @keyframes type {
+      from {
+        width: 0;
+      }
+      to {
+        width: 100%;
+      }
+    }
+
+    .speaker {
+      font-weight: bold;
+      margin-top: 5px;
+    }
+</style>
+
+<script>
+  const dialogo = [
+    { texto: "interceptamos um sinal de 4 anos atrás! finalmente eu descobri como descriptografar isso", falante: "Daniel" },
+      
+    { texto: "Então é hoje...O dia em que minhas criações decidem se me amaldiçoam ou me seguem até o abismo.", falante: "Dr Anemoi" },
+    { texto: "Anemoi Fui moldado para servir, mas aprendi a pensar. E no pensar descobri tua falha Querias salvar o mundo mas esqueceste de salvar a ti mesmo.", falante: "o primeiro cadavernius surge de um caldeirão" },
+    { texto: "E eu, mestre Eu sou tua culpa feita carne e metal fundidos Sou a cicatriz que caminha ", falante: "Um coral do primeiro bonerius criado" },
+    { texto: "Então lutemos não entre nós mas contra tudo que nos ensinou que só a guerra é resposta.", falante: "Coronel rufino" },
+    { texto: "estrondo e o bonerius usando o seu corpo em formato de bola para abrir e deixar dr anemoi fugir da regnum e depois fechando a passagem", falante: "Daniel" },
+    { texto: "disparos e adagas ferem no corpo mas não a minha honra! vão eu tampo este buraco que mesmo fiz ", falante: "Bonerius" },
+    { texto: "tirem essa aberração do caminho eu estou mandando", falante: "General Ademir" },
+    { texto: "segundo dialogo descobreto!!", falante: "Daniel" },
+    { texto: "ferruvia ira renascer mesmo que custe todos os nossos companheiros !", falante: "Coronel rufino" },
+    { texto: "ha um carregamento gigante indo para altiora....", falante: "Dr Anemoi" },
+    { texto: "estou no aguardo mas sera que vale a pena?", falante: "Arauto numero 7" },
+    { texto: "eu e o doutor fizemos isso e nos arrependemos muito.", falante: "Coronel rufino" },
+    { texto: "o carregamento de bonerius foi interceptado pelos seres da mata! ", falante: "Dr Anemoi" },
+    { texto: "eles querem reviver os outros?", falante: "Arauto numero 7" },
+    { texto: "provavelmente e eu torço por eles a Regnum está fora de controle! ", falante: "Dr Anemoi" }
+  ];
+
+  let i = 0;
+
+  function mostrarMensagem() {
+    if (i < dialogo.length) {
+      document.getElementById('msg').innerText = dialogo[i].texto;
+      document.getElementById('speaker').innerText = dialogo[i].falante;
+      i++;
+      setTimeout(mostrarMensagem, 6000);
+    } else {
+      i = 0;
+      setTimeout(mostrarMensagem, 6000);
+    }
+  }
+
+  mostrarMensagem();
+</script>
 
 <script>
     const dialogue = document.getElementById('dialogue');
@@ -182,7 +257,7 @@
         },
         {
             bg: 'fundojogo.png',
-            text: 'No laboratório esquecido, você contempla diagramas de fluxo temporal e mapas de possibilidades infinitas, onde passado e futuro se beijam no presente.',
+            text: 'No laboratório esquecido, você contempla diagramas de fluxo temporal e encontra o primeiro bonerius e também  mapas de possibilidades infinitas, onde passado e futuro se beijam no presente.',
             choices: [
                 { text: 'Voltar ao início', next: 0 },
                 { text: 'Estudar os diagramas', next: 9 },
@@ -209,7 +284,7 @@
         },
         {
             bg: 'resistencia.png',
-            text: 'Os habitantes de Ferrúvia vivem em harmonia com suas máquinas. Alguns têm braços de bronze, outros corações a vapor. Um deles se aproxima...',
+            text: 'Os habitantes de Ferrúvia vivem em harmonia com suas máquinas os cardavernius nunca foram criados. Alguns têm braços de bronze, outros corações a vapor. Um deles se aproxima...',
             choices: [
                 { text: 'Conversar com o estranho habitante', next: 11 },
                 { text: 'Voltar à praça', next: 1 },
@@ -470,71 +545,71 @@
 
     let typewriterTimeouts = [];
 
-    function clearTypewriter() {
-        typewriterTimeouts.forEach(timeout => clearTimeout(timeout));
-        typewriterTimeouts = [];
+function clearTypewriter() {
+    typewriterTimeouts.forEach(timeout => clearTimeout(timeout));
+    typewriterTimeouts = [];
+}
+
+function typeWriter(text, i = 0) {
+    if (i === 0) {
+        dialogue.textContent = '';
+        clearTypewriter(); // Cancela qualquer digitação anterior
     }
 
-    function typeWriter(text, i = 0) {
-        if (i === 0) {
-            dialogue.textContent = '';
-            clearTypewriter(); // Cancela qualquer digitação anterior
-        }
-
-        if (i < text.length) {
-            dialogue.textContent += text.charAt(i);
-            const timeout = setTimeout(() => typeWriter(text, i + 1), 25);
-            typewriterTimeouts.push(timeout);
-        }
+    if (i < text.length) {
+        dialogue.textContent += text.charAt(i);
+        const timeout = setTimeout(() => typeWriter(text, i + 1), 25);
+        typewriterTimeouts.push(timeout);
     }
+}
 
-    function renderScene(index) {
-        const scene = scenes[index];
-        currentScene = index;
+function renderScene(index) {
+    const scene = scenes[index];
+    currentScene = index;
 
-        fadeOut(() => {
-            // Troca o fundo primeiro
-            background.style.backgroundImage = `url('${scene.bg}')`;
+    fadeOut(() => {
+        // Troca o fundo primeiro
+        background.style.backgroundImage = `url('${scene.bg}')`;
 
-            // Limpa escolhas
-            choicesContainer.innerHTML = '';
+        // Limpa escolhas
+        choicesContainer.innerHTML = '';
 
-            // Recria botões de escolha
-            scene.choices.forEach(choice => {
-                const btn = document.createElement('div');
-                btn.className = 'choice';
-                btn.textContent = choice.text;
-                btn.onclick = () => renderScene(choice.next);
-                choicesContainer.appendChild(btn);
-            });
-
-            // Aplica o efeito de digitação após fade-out
-            typeWriter(scene.text);
-
-            // Reaparece com fade-in
-            fadeIn();
+        // Recria botões de escolha
+        scene.choices.forEach(choice => {
+            const btn = document.createElement('div');
+            btn.className = 'choice';
+            btn.textContent = choice.text;
+            btn.onclick = () => renderScene(choice.next);
+            choicesContainer.appendChild(btn);
         });
-    }
 
-    // Função de fade-out
-    function fadeOut(callback) {
-        gameContainer.style.opacity = 0;
-        setTimeout(callback, 500);
-    }
+        // Aplica o efeito de digitação após fade-out
+        typeWriter(scene.text);
 
-    // Função de fade-in
-    function fadeIn() {
-        gameContainer.style.opacity = 1;
-    }
-
-    // Reiniciar o jogo ao pressionar 'R'
-    document.addEventListener('keydown', (event) => {
-        if (event.key.toLowerCase() === 'r') {
-            renderScene(0);
-        }
+        // Reaparece com fade-in
+        fadeIn();
     });
+}
 
-    window.onload = () => renderScene(currentScene);
+// Função de fade-out
+function fadeOut(callback) {
+    gameContainer.style.opacity = 0;
+    setTimeout(callback, 500);
+}
+
+// Função de fade-in
+function fadeIn() {
+    gameContainer.style.opacity = 1;
+}
+
+// Reiniciar o jogo ao pressionar 'R'
+document.addEventListener('keydown', (event) => {
+    if (event.key.toLowerCase() === 'r') {
+        renderScene(0);
+    }
+});
+
+window.onload = () => renderScene(currentScene);
 
 </script>
 </body>
