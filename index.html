@@ -11,8 +11,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
+    </head>
+    <body>
     <style>
-        body {
+       body {
             margin: 0;
             font-family: 'Rajdhani', sans-serif;
             background-color: #0a0a0a;
@@ -221,55 +223,50 @@
         }
 
         document.getElementById('botao-iniciar').addEventListener('click', function() {
-            toggleVisibility('tela-inicio', false);  // Oculta a tela inicial
-            toggleVisibility('game', true);           // Exibe a tela do jogo
-            mostrarCena(0);                          // Carrega a primeira cena
+            toggleVisibility('tela-inicio', false); // Oculta a tela inicial
+            toggleVisibility('game', true);          // Exibe a tela do jogo
+            mostrarCena(0);                            // Carrega a primeira cena
         });
+
+        // Dados das cenas
+
 
         // Função para mostrar uma cena específica, de acordo com o índice
         function mostrarCena(cenaIndex) {
-            // Aqui você pode manipular a exibição das cenas de maneira personalizada
-            console.log(`Carregando cena: ${scenes}`);
-            // Exemplo: carrega os elementos dessa cena aqui (por exemplo, mostrar ou ocultar divs)
-            toggleVisibility('dialogue', true);
-            toggleVisibility('choices', true);
+            if (cenaIndex >= 0 && cenaIndex < scenesData.length) {
+                const cena = scenesData[cenaIndex];
+
+                // Define o background
+                document.getElementById('background').style.backgroundImage = cena.background;
+
+                // Exibe a mensagem no codec
+                document.getElementById('msg').innerText = cena.message;
+                document.getElementById('speaker').innerText = cena.speaker;
+                toggleVisibility('codec-container', true);
+                toggleVisibility('dialogue', false);
+
+                // Limpa as escolhas anteriores
+                const choicesContainer = document.getElementById('choices');
+                choicesContainer.innerHTML = '';
+                toggleVisibility('choices', true);
+
+                // Cria os botões de escolha
+                cena.choices.forEach(choice => {
+                    const button = document.createElement('button');
+                    button.innerText = choice.text;
+                    button.classList.add('choice');
+                    button.addEventListener('click', () => {
+                        mostrarCena(choice.nextScene); // Carrega a próxima cena ao clicar
+                    });
+                    choicesContainer.appendChild(button);
+                });
+            } else {
+                console.error(`Cena com índice ${cenaIndex} não encontrada!`);
+            }
         }
-    </script>
-<style>
-
-    #codec-container {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      width: 290px;
-      background-color: rgba(0, 0, 0, 0.8);
-      border: 2px solid #00FF00;
-      padding: 10px;
-      border-radius: 10px;
-      font-family: 'Courier New', monospace;
-      color: #00FF00;
-      z-index: 10;
-    }
-
-    .message {
-      margin-bottom: 10px;
-      animation: type 2s steps(40) 1 normal both;
-    }
-
-    @keyframes type {
-      from {
-        width: 0;
-      }
-      to {
-        width: 100%;
-      }
-    }
-
-    .speaker {
-      font-weight: bold;
-      margin-top: 5px;
-    }
-</style>
+    </script>    
+            
+        
 
 <script>
   const dialogo = [
@@ -307,15 +304,13 @@
   }
 
   mostrarMensagem();
-</script>
 
-<script>
     const dialogue = document.getElementById('dialogue');
     const choicesContainer = document.getElementById('choices');
     const background = document.getElementById('background');
     const gameContainer = document.getElementById('game');
 
-    const scenes = [
+    const scenesData = [
         {
             bg: 'regnum.png',
             text: 'Você desperta em Ferrúvia, entre engrenagens e vapor, com o som de apitos distantes e o cheiro metálico de um novo destino...',
