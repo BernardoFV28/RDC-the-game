@@ -205,61 +205,7 @@
         <div class="dialogue-box " id="dialogue"></div>
         <div class="choices " id="choices"></div>
     </div>
-
-    <script>
-        // Função para ocultar e mostrar elementos de forma mais flexível
-        function toggleVisibility(elementId, isVisible) {
-            const element = document.getElementById(elementId);
-            if (isVisible) {
-                element.classList.remove('hidden');
-            } else {
-                element.classList.add('hidden');
-            }
-        }
-
-        document.getElementById('botao-iniciar').addEventListener('click', function() {
-            toggleVisibility('tela-inicio', false); // Oculta a tela inicial
-            toggleVisibility('game', true);          // Exibe a tela do jogo
-            mostrarCena(0);                            // Carrega a primeira cena
-        });
-
-        // Dados das cenas
-
-
-        // Função para mostrar uma cena específica, de acordo com o índice
-        function mostrarCena(cenaIndex) {
-            if (cenaIndex >= 0 && cenaIndex < scenesData.length) {
-                const cena = scenesData[cenaIndex];
-
-                // Define o background
-                document.getElementById('background').style.backgroundImage = cena.background;
-
-                // Exibe a mensagem no codec
-                document.getElementById('msg').innerText = cena.message;
-                document.getElementById('speaker').innerText = cena.speaker;
-                toggleVisibility('codec-container', true);
-                toggleVisibility('dialogue', false);
-
-                // Limpa as escolhas anteriores
-                const choicesContainer = document.getElementById('choices');
-                choicesContainer.innerHTML = '';
-                toggleVisibility('choices', true);
-
-                // Cria os botões de escolha
-                cena.choices.forEach(choice => {
-                    const button = document.createElement('button');
-                    button.innerText = choice.text;
-                    button.classList.add('choice');
-                    button.addEventListener('click', () => {
-                        mostrarCena(choice.nextScene); // Carrega a próxima cena ao clicar
-                    });
-                    choicesContainer.appendChild(button);
-                });
-            } else {
-                console.error(`Cena com índice ${cenaIndex} não encontrada!`);
-            }
-        }
-    </script>    
+   
             
         
 
