@@ -175,11 +175,32 @@
         <div class="choices" id="choices"></div>
     </div>
     <script> 
-        document.getElementById('botao-iniciar').addEventListener('click', function() {
-  document.getElementById('tela-inicio').style.display = 'none';
-  document.getElementById('game').style.display = 'block';
-  mostrarCena(0); // 👈 Aqui ele carrega a PRIMEIRA CENA!
+// Função para ocultar e mostrar elementos de forma mais flexível
+function toggleVisibility(elementId, isVisible) {
+  const element = document.getElementById(elementId);
+  if (isVisible) {
+    element.classList.remove('hidden');
+  } else {
+    element.classList.add('hidden');
+  }
+}
+
+// Adiciona a classe "hidden" ao CSS para controlar a visibilidade
+// No seu CSS, adicione:
+// .hidden { display: none; }
+
+document.getElementById('botao-iniciar').addEventListener('click', function() {
+  toggleVisibility('tela-inicio', false);  // Oculta a tela inicial
+  toggleVisibility('game', true);           // Exibe a tela do jogo
+  mostrarCena(0);                          // Carrega a primeira cena
 });
+
+// Função para mostrar uma cena específica, de acordo com o índice
+function mostrarCena(cenaIndex) {
+  // Aqui você pode manipular a exibição das cenas de maneira personalizada
+  console.log(`Carregando cena: ${cenaIndex}`);
+  // Exemplo: carrega os elementos dessa cena aqui (por exemplo, mostrar ou ocultar divs)
+}
     </script>
 <style>
 
