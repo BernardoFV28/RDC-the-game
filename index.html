@@ -127,6 +127,10 @@
     </style>
 </head>
 <body>
+      <div id="tela-inicio">
+    <img src="favcon.png" id="logo">
+    <button id="botao-iniciar">Entrar em Ferrúvia</button>
+  </div>
     <div id="game">
         <div class="background" id="background"></div>
              <div id="codec-container">
@@ -136,6 +140,13 @@
         <div class="dialogue-box" id="dialogue"></div>
         <div class="choices" id="choices"></div>
     </div>
+    <script> 
+        document.getElementById('botao-iniciar').addEventListener('click', function() {
+  document.getElementById('tela-inicio').style.display = 'none';
+  document.getElementById('game').style.display = 'block';
+  mostrarCena(0); // 👈 Aqui ele carrega a PRIMEIRA CENA!
+});
+    </script>
 <style>
 
     #codec-container {
