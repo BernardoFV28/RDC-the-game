@@ -5,6 +5,7 @@
     <title>Raízes de Cobre: Escolhas de Ferrúvia</title>
     <meta property="og:title" content="Raízes de Cobre">
     <meta property="og:image" content="favcon.png">
+
     <link rel="apple-touch-icon" sizes="180x180" href="favcon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="favcon.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favcon.png">
@@ -12,43 +13,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
     <style>
-       body {
+        body {
             margin: 0;
             font-family: 'Rajdhani', sans-serif;
             background-color: #0a0a0a;
             color: #f0e7d8;
             overflow: hidden;
-        }
-        #tela-inicio {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        #logo {
-            max-width: 70%;
-            height: 60%;
-            margin-bottom: 30px;
-            z-index: 1;
-        }
-
-        #botao-iniciar {
-            background-color: #5c4033;
-            color: #f0e6d2;
-            padding: 15px 30px;
-            font-size: 1.2em;
-            border: 2px solid #c49b66;
-            border-radius: 15px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        #botao-iniciar:hover {
-            background-color: #7b5e42;
-            transform: scale(1.05);
-            box-shadow: 0 0 15px #c49b66;
         }
 
         #game {
@@ -58,16 +28,14 @@
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
-            opacity: 1;
-            transition: opacity 0.5s ease-in-out;
+            opacity: 1; /* Inicialmente visível */
+            transition: opacity 0.5s ease-in-out; /* Transição suave para o fade */
         }
 
         .background {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             background-size: cover;
             background-position: center;
             z-index: 1;
@@ -124,13 +92,12 @@
         }
 
         .dialogue-box {
-            z-index: 5;
+            z-index: 3;
             padding: 20px;
             background-color: rgba(24, 24, 27, 0.8);
             font-size: 1.1em;
             font-weight: 400;
             border-top: 2px solid #4b5563;
-            transition: opacity 0.5s ease-in-out;
         }
 
         .choices {
@@ -157,101 +124,24 @@
         .choice:hover {
             background-color: #475569;
         }
-
-        .hidden { display: none; }
-
-        #codec-container {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            width: 290px;
-            background-color: rgba(0, 0, 0, 0.8);
-            border: 2px solid #00FF00;
-            padding: 10px;
-            border-radius: 10px;
-            font-family: 'Courier New', monospace;
-            color: #00FF00;
-            z-index: 10;
-        }
-
-        .message {
-            margin-bottom: 10px;
-            animation: type 2s steps(40) 1 normal both;
-        }
-
-        @keyframes type {
-            from {
-                width: 0;
-            }
-            to {
-                width: 100%;
-            }
-        }
-
-        .speaker {
-            font-weight: bold;
-            margin-top: 5px;
-        }
     </style>
 </head>
 <body>
-   
-    <div id="game" class="hidden">
+    <div id="game">
         <div class="background" id="background"></div>
-        <div id="codec-container">
-            <div class="message" id="msg"></div>
-            <div class="speaker" id="speaker"></div>
-        </div>
-        <div class="dialogue-box " id="dialogue"></div>
-        <div class="choices " id="choices"></div>
-    </div>
-   
-            
+
         
+        <div class="dialogue-box" id="dialogue"></div>
+        <div class="choices" id="choices"></div>
+    </div>
 
 <script>
-  const dialogo = [
-    { texto: "interceptamos um sinal de 4 anos atrás! finalmente eu descobri como descriptografar isso", falante: "Daniel" },
-      
-    { texto: "Então é hoje...O dia em que minhas criações decidem se me amaldiçoam ou me seguem até o abismo.", falante: "Dr Anemoi" },
-    { texto: "Anemoi Fui moldado para servir, mas aprendi a pensar. E no pensar descobri tua falha Querias salvar o mundo mas esqueceste de salvar a ti mesmo.", falante: "o primeiro cadavernius surge de um caldeirão" },
-    { texto: "E eu, mestre Eu sou tua culpa feita carne e metal fundidos Sou a cicatriz que caminha ", falante: "Um coral do primeiro bonerius criado" },
-    { texto: "Então lutemos não entre nós mas contra tudo que nos ensinou que só a guerra é resposta.", falante: "Coronel rufino" },
-    { texto: "estrondo e o bonerius usando o seu corpo em formato de bola para abrir e deixar dr anemoi fugir da regnum e depois fechando a passagem", falante: "Daniel" },
-    { texto: "disparos e adagas ferem no corpo mas não a minha honra! vão eu tampo este buraco que mesmo fiz ", falante: "Bonerius" },
-    { texto: "tirem essa aberração do caminho eu estou mandando", falante: "General Ademir" },
-    { texto: "segundo dialogo descobreto!!", falante: "Daniel" },
-    { texto: "ferruvia ira renascer mesmo que custe todos os nossos companheiros !", falante: "Coronel rufino" },
-    { texto: "ha um carregamento gigante indo para altiora....", falante: "Dr Anemoi" },
-    { texto: "estou no aguardo mas sera que vale a pena?", falante: "Arauto numero 7" },
-    { texto: "eu e o doutor fizemos isso e nos arrependemos muito.", falante: "Coronel rufino" },
-    { texto: "o carregamento de bonerius foi interceptado pelos seres da mata! ", falante: "Dr Anemoi" },
-    { texto: "eles querem reviver os outros?", falante: "Arauto numero 7" },
-    { texto: "provavelmente e eu torço por eles a Regnum está fora de controle! ", falante: "Dr Anemoi" }
-  ];
-
-  let i = 0;
-
-  function mostrarMensagem() {
-    if (i < dialogo.length) {
-      document.getElementById('msg').innerText = dialogo[i].texto;
-      document.getElementById('speaker').innerText = dialogo[i].falante;
-      i++;
-      setTimeout(mostrarMensagem, 6000);
-    } else {
-      i = 0;
-      setTimeout(mostrarMensagem, 6000);
-    }
-  }
-
-  mostrarMensagem();
-
     const dialogue = document.getElementById('dialogue');
     const choicesContainer = document.getElementById('choices');
     const background = document.getElementById('background');
     const gameContainer = document.getElementById('game');
 
-    const scenesData = [
+    const scenes = [
         {
             bg: 'regnum.png',
             text: 'Você desperta em Ferrúvia, entre engrenagens e vapor, com o som de apitos distantes e o cheiro metálico de um novo destino...',
@@ -292,7 +182,7 @@
         },
         {
             bg: 'fundojogo.png',
-            text: 'No laboratório esquecido, você contempla diagramas de fluxo temporal e encontra o primeiro bonerius e também  mapas de possibilidades infinitas, onde passado e futuro se beijam no presente.',
+            text: 'No laboratório esquecido, você contempla diagramas de fluxo temporal e mapas de possibilidades infinitas, onde passado e futuro se beijam no presente.',
             choices: [
                 { text: 'Voltar ao início', next: 0 },
                 { text: 'Estudar os diagramas', next: 9 },
@@ -319,7 +209,7 @@
         },
         {
             bg: 'resistencia.png',
-            text: 'Os habitantes de Ferrúvia vivem em harmonia com suas máquinas os cardavernius nunca foram criados. Alguns têm braços de bronze, outros corações a vapor. Um deles se aproxima...',
+            text: 'Os habitantes de Ferrúvia vivem em harmonia com suas máquinas. Alguns têm braços de bronze, outros corações a vapor. Um deles se aproxima...',
             choices: [
                 { text: 'Conversar com o estranho habitante', next: 11 },
                 { text: 'Voltar à praça', next: 1 },
@@ -580,71 +470,71 @@
 
     let typewriterTimeouts = [];
 
-function clearTypewriter() {
-    typewriterTimeouts.forEach(timeout => clearTimeout(timeout));
-    typewriterTimeouts = [];
-}
-
-function typeWriter(text, i = 0) {
-    if (i === 0) {
-        dialogue.textContent = '';
-        clearTypewriter(); // Cancela qualquer digitação anterior
+    function clearTypewriter() {
+        typewriterTimeouts.forEach(timeout => clearTimeout(timeout));
+        typewriterTimeouts = [];
     }
 
-    if (i < text.length) {
-        dialogue.textContent += text.charAt(i);
-        const timeout = setTimeout(() => typeWriter(text, i + 1), 25);
-        typewriterTimeouts.push(timeout);
+    function typeWriter(text, i = 0) {
+        if (i === 0) {
+            dialogue.textContent = '';
+            clearTypewriter(); // Cancela qualquer digitação anterior
+        }
+
+        if (i < text.length) {
+            dialogue.textContent += text.charAt(i);
+            const timeout = setTimeout(() => typeWriter(text, i + 1), 25);
+            typewriterTimeouts.push(timeout);
+        }
     }
-}
 
-function renderScene(index) {
-    const scene = scenes[index];
-    currentScene = index;
+    function renderScene(index) {
+        const scene = scenes[index];
+        currentScene = index;
 
-    fadeOut(() => {
-        // Troca o fundo primeiro
-        background.style.backgroundImage = `url('${scene.bg}')`;
+        fadeOut(() => {
+            // Troca o fundo primeiro
+            background.style.backgroundImage = `url('${scene.bg}')`;
 
-        // Limpa escolhas
-        choicesContainer.innerHTML = '';
+            // Limpa escolhas
+            choicesContainer.innerHTML = '';
 
-        // Recria botões de escolha
-        scene.choices.forEach(choice => {
-            const btn = document.createElement('div');
-            btn.className = 'choice';
-            btn.textContent = choice.text;
-            btn.onclick = () => renderScene(choice.next);
-            choicesContainer.appendChild(btn);
+            // Recria botões de escolha
+            scene.choices.forEach(choice => {
+                const btn = document.createElement('div');
+                btn.className = 'choice';
+                btn.textContent = choice.text;
+                btn.onclick = () => renderScene(choice.next);
+                choicesContainer.appendChild(btn);
+            });
+
+            // Aplica o efeito de digitação após fade-out
+            typeWriter(scene.text);
+
+            // Reaparece com fade-in
+            fadeIn();
         });
-
-        // Aplica o efeito de digitação após fade-out
-        typeWriter(scene.text);
-
-        // Reaparece com fade-in
-        fadeIn();
-    });
-}
-
-// Função de fade-out
-function fadeOut(callback) {
-    gameContainer.style.opacity = 0;
-    setTimeout(callback, 500);
-}
-
-// Função de fade-in
-function fadeIn() {
-    gameContainer.style.opacity = 1;
-}
-
-// Reiniciar o jogo ao pressionar 'R'
-document.addEventListener('keydown', (event) => {
-    if (event.key.toLowerCase() === 'r') {
-        renderScene(0);
     }
-});
 
-window.onload = () => renderScene(currentScene);
+    // Função de fade-out
+    function fadeOut(callback) {
+        gameContainer.style.opacity = 0;
+        setTimeout(callback, 500);
+    }
+
+    // Função de fade-in
+    function fadeIn() {
+        gameContainer.style.opacity = 1;
+    }
+
+    // Reiniciar o jogo ao pressionar 'R'
+    document.addEventListener('keydown', (event) => {
+        if (event.key.toLowerCase() === 'r') {
+            renderScene(0);
+        }
+    });
+
+    window.onload = () => renderScene(currentScene);
 
 </script>
 </body>
