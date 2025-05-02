@@ -143,35 +143,37 @@
   }
 
   .dialogue-box {
-    position: absolute;
-    left: 2%;
-    right: 2%;
-    bottom: 5%;
-    width: 96%;
-    height: 45%;
-    font-size: 1rem;
-    padding: 15px;
-    overflow-y: auto;
-    background-color: rgba(24, 24, 27, 0.95); /* mais opaco pro contraste */
-    border-radius: 12px;
-    border-top: 2px solid #4b5563;
-    box-shadow: 0 0 10px rgba(0,0,0,0.5);
-  }
+  position: absolute;
+  left: 2%;
+  right: 2%;
+  bottom: 12%; /* sobe um pouco pra dar espaço pras choices */
+  width: 96%;
+  height: 45%;
+  font-size: 1rem;
+  padding: 15px;
+  overflow-y: auto;
+  background-color: rgba(24, 24, 27, 0.95);
+  border-radius: 12px;
+  border-top: 2px solid #4b5563;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  z-index: 5; /* maior que choices */
+}
 
-  .choices {
-    position: absolute;
-    left: 2%;
-    right: 2%;
-    bottom: 2%;
-    width: 96%;
-    font-size: 1rem;
-    flex-direction: column;
-    gap: 8px;
-    background-color: rgba(12, 12, 15, 0.85);
-    border-radius: 10px;
-    border-top: 1px solid #374151;
-    padding: 10px;
-  }
+.choices {
+  position: absolute;
+  left: 2%;
+  right: 2%;
+  bottom: 2%;
+  width: 96%;
+  font-size: 1rem;
+  flex-direction: column;
+  gap: 8px;
+  background-color: rgba(12, 12, 15, 0.85);
+  border-radius: 10px;
+  border-top: 1px solid #374151;
+  padding: 10px;
+  z-index: 3;
+}
 
   .choice {
     font-size: 1.1rem;
