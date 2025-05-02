@@ -124,44 +124,80 @@
         .choice:hover {
             background-color: #475569;
         }
- @media screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
   body, #game {
     overflow-y: auto;
     height: auto;
   }
 
-  .dialogue-box, .choices {
+  .dialogue-box {
+    position: absolute;
     left: 2%;
     right: 2%;
-    bottom: 8%;
-    font-size: 18px;
-    height: 40%;
-    width: auto;
+    bottom: 5%;
+    width: 96%;
+    height: 45%;
+    font-size: 1rem;
+    padding: 15px;
+    overflow-y: auto;
+    background-color: rgba(24, 24, 27, 0.95); /* mais opaco pro contraste */
+    border-radius: 12px;
+    border-top: 2px solid #4b5563;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  }
+
+  .choices {
+    position: absolute;
+    left: 2%;
+    right: 2%;
+    bottom: 2%;
+    width: 96%;
+    font-size: 1rem;
+    flex-direction: column;
+    gap: 8px;
+    background-color: rgba(12, 12, 15, 0.85);
+    border-radius: 10px;
+    border-top: 1px solid #374151;
+    padding: 10px;
   }
 
   .choice {
-    font-size: 0.95rem;
-    padding: 7px;
+    font-size: 1.1rem;
+    padding: 12px;
+    text-align: center;
   }
 
   .sprite {
-    width: 70px;
-    height: 70px;
+    width: 60px;
+    height: 60px;
+    background-size: contain;
   }
 
   .personagem-container {
     bottom: 20%;
     left: 10px;
     flex-direction: column;
+    align-items: flex-start;
   }
 
   #codec-container {
-    width: 90%;
-    left: 5%;
+    width: 92%;
+    left: 4%;
     top: 10px;
-    font-size: 0.85rem;
+    font-size: 0.9rem;
+    padding: 10px;
+    border-radius: 10px;
+  }
+
+  .vida-barra, .elemento-barra {
+    width: 140px;
+  }
+
+  .nome {
+    font-size: 0.95rem;
   }
 }
+
 
     </style>
 </head>
@@ -267,7 +303,7 @@
         },
         {
             bg: 'regnum.png',
-            text: 'A praça pulsa com vida mecânica e vê varios banners do governo tecnocrata, onde autômatos dmostram em sua aparencia que o govrno nâo mostra ser muito bom, e cada passo parece que você é estranho para os habitantes.',
+            text: 'A praça pulsa com vida mecânica e vê varios banners do governo tecnocrata, onde autômatos demonstram em sua aparencia que o governo não mostra ser muito bom, e cada passo parece que você é estranho para os habitantes.',
             choices: [
                 { text: 'Investigar o relógio gigante', next: 3 },
                 { text: 'Observar os habitantes de Ferrúvia', next: 7 },
@@ -332,7 +368,7 @@
         },
         {
             bg: 'glichtfinal.png',
-            text: 'O inventor revela seu passado: era um guerreiro do que descubriu que o necro crystal pode alterar o espaço tempo que numca foi descoberto, traído por sua criação. Carrega nos olhos o brilho de quem viu eras passarem em segundos seculos em horas.',
+            text: 'O inventor revela seu passado: era um guerreiro do que descubriu que o necrocrystal pode alterar o espaço tempo que numca foi descoberto, traído por sua criação. Carrega nos olhos o brilho de quem viu eras passarem em segundos seculos em horas.',
             choices: [
                 { text: 'Voltar para a conversa principal', next: 2 },
                 { text: 'Questionar sobre os artefatos temporais', next: 25 }
@@ -419,7 +455,7 @@
         },
         {
             bg: 'favcon.png',
-            text: 'O autômato corre descontroladamente, tropeçando em suas próprias engrenagens caídas . Ao alcançá-lo, você percebe um pequeno bilhete preso em seu mecanismo de combate.',
+            text: 'O autômato corre descontroladamente, tropeçando em suas próprias engrenagens  . Ao alcançá-lo, você percebe um pequeno bilhete preso em seu mecanismo de combate.',
             choices: [
                 { text: 'Ler o bilhete', next: 11 },
                 { text: 'Desligar o autômato', next: 1 },
@@ -544,7 +580,7 @@
         },
         {
             bg: 'regnum.png',
-            text: 'Com Ferrúvia livre, novas possibilidades se abrem. Há rumores de outras cidades movidas a vapor além das montanhas.',
+            text: 'Com Ferrúvia livre, novas possibilidades se abrem. Há rumores de outras cidades movidas a vapor , agua emagma além das montanhas.',
             choices: [
                 { text: 'Partir em busca de novas aventuras', next: 0 },
                 { text: 'Ficar e ajudar a reconstruir Ferrúvia', next: 16 },
