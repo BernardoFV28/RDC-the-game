@@ -124,6 +124,43 @@
         .choice:hover {
             background-color: #475569;
         }
+ @media screen and (max-width: 768px) {
+  body, #game {
+    overflow-y: auto;
+    height: auto;
+  }
+
+  .dialogue-box, .choices {
+    left: 2%;
+    right: 2%;
+    bottom: 8%;
+    font-size: 1rem;
+  }
+
+  .choice {
+    font-size: 0.95rem;
+    padding: 7px;
+  }
+
+  .sprite {
+    width: 70px;
+    height: 70px;
+  }
+
+  .personagem-container {
+    bottom: 20%;
+    left: 10px;
+    flex-direction: column;
+  }
+
+  #codec-container {
+    width: 90%;
+    left: 5%;
+    top: 10px;
+    font-size: 0.85rem;
+  }
+}
+
     </style>
 </head>
 <body>
