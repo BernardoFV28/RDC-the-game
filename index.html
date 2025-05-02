@@ -91,14 +91,26 @@
             width: 100%;
         }
 
-        .dialogue-box {
-            z-index: 3;
-            padding: 20px;
-            background-color: rgba(24, 24, 27, 0.8);
-            font-size: 1.1em;
-            font-weight: 400;
-            border-top: 2px solid #4b5563;
-        }
+       .dialogue-box {
+        z-index: 3;
+        position: absolute;
+        left: 4%;
+        right: 4%;
+        bottom: 6%;
+        padding: 20px 24px;
+        background: linear-gradient(to top, rgba(24,24,27,0.95), rgba(36,36,40,0.85));
+        font-size: 1.15em;
+        font-weight: 400;
+        border-top: 2px solid #4b5563;
+        border-radius: 12px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.6);
+        color: #e5e7eb;
+        backdrop-filter: blur(6px);
+        transition: all 0.3s ease-in-out;
+        max-height: 40vh;
+        overflow-y: auto;
+    }
+
 
         .choices {
             z-index: 3;
