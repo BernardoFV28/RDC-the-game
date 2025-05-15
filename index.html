@@ -251,24 +251,23 @@
 
 <script>
   const dialogo = [
-    { texto: "interceptamos um sinal de 4 anos atrás! finalmente eu descobri como descriptografar isso", falante: "Daniel" },
-      
-    { texto: "Então é hoje...O dia em que minhas criações decidem se me amaldiçoam ou me seguem até o abismo.", falante: "Dr Anemoi" },
-    { texto: "Anemoi Fui moldado para servir, mas aprendi a pensar. E no pensar descobri tua falha Querias salvar o mundo mas esqueceste de salvar a ti mesmo.", falante: "o primeiro cadavernius surge de um caldeirão" },
-    { texto: "E eu, mestre Eu sou tua culpa feita carne e metal fundidos Sou a cicatriz que caminha ", falante: "Um coral do primeiro bonerius criado" },
-    { texto: "Então lutemos não entre nós mas contra tudo que nos ensinou que só a guerra é resposta.", falante: "Coronel rufino" },
-    { texto: "estrondo e o bonerius usando o seu corpo em formato de bola para abrir e deixar dr anemoi fugir da regnum e depois fechando a passagem", falante: "Daniel" },
-    { texto: "disparos e adagas ferem no corpo mas não a minha honra! vão eu tampo este buraco que mesmo fiz ", falante: "Bonerius" },
-    { texto: "tirem essa aberração do caminho eu estou mandando", falante: "General Ademir" },
-    { texto: "segundo dialogo descobreto!!", falante: "Daniel" },
-    { texto: "ferruvia ira renascer mesmo que custe todos os nossos companheiros !", falante: "Coronel rufino" },
-    { texto: "ha um carregamento gigante indo para altiora....", falante: "Dr Anemoi" },
-    { texto: "estou no aguardo mas sera que vale a pena?", falante: "Arauto numero 7" },
-    { texto: "eu e o doutor fizemos isso e nos arrependemos muito.", falante: "Coronel rufino" },
-    { texto: "o carregamento de bonerius foi interceptado pelos seres da mata! ", falante: "Dr Anemoi" },
-    { texto: "eles querem reviver os outros?", falante: "Arauto numero 7" },
-    { texto: "provavelmente e eu torço por eles a Regnum está fora de controle! ", falante: "Dr Anemoi" }
-  ];
+  { texto: "1. interceptamos um sinal de 4 anos atrás! finalmente eu descobri como descriptografar isso", falante: "Daniel" },
+  { texto: "2. Então é hoje...O dia em que minhas criações decidem se me amaldiçoam ou me seguem até o abismo.", falante: "Dr Anemoi" },
+  { texto: "3. Anemoi Fui moldado para servir, mas aprendi a pensar. E no pensar descobri tua falha Querias salvar o mundo mas esqueceste de salvar a ti mesmo.", falante: "o primeiro cadavernius surge de um caldeirão" },
+  { texto: "4. E eu, mestre Eu sou tua culpa feita carne e metal fundidos Sou a cicatriz que caminha ", falante: "Um coral do primeiro bonerius criado" },
+  { texto: "5. Então lutemos não entre nós mas contra tudo que nos ensinou que só a guerra é resposta.", falante: "Coronel rufino" },
+  { texto: "6. estrondo e o bonerius usando o seu corpo em formato de bola para abrir e deixar dr anemoi fugir da regnum e depois fechando a passagem", falante: "Daniel" },
+  { texto: "7. disparos e adagas ferem no corpo mas não a minha honra! vão eu tampo este buraco que mesmo fiz ", falante: "Bonerius" },
+  { texto: "8. tirem essa aberração do caminho eu estou mandando", falante: "General Ademir" },
+  { texto: "9. segundo dialogo descobreto!!", falante: "Daniel" },
+  { texto: "10. ferruvia ira renascer mesmo que custe todos os nossos companheiros !", falante: "Coronel rufino" },
+  { texto: "11. ha um carregamento gigante indo para altiora....", falante: "Dr Anemoi" },
+  { texto: "12. estou no aguardo mas sera que vale a pena?", falante: "Arauto numero 7" },
+  { texto: "13. eu e o doutor fizemos isso e nos arrependemos muito.", falante: "Coronel rufino" },
+  { texto: "14. o carregamento de bonerius foi interceptado pelos seres da mata! ", falante: "Dr Anemoi" },
+  { texto: "15. eles querem reviver os outros?", falante: "Arauto numero 7" },
+  { texto: "16. provavelmente e eu torço por eles a Regnum está fora de controle! ", falante: "Dr Anemoi" }
+];
 
   let i = 0;
 
@@ -325,11 +324,11 @@
         },
         {
             bg: 'favcon.png',
-            text: 'Ao tocar no relógio enferrujado, engrenagens pulsam mostrando um crystal chamado necrocrystal. Um compartimento se abre, revelando uma chave que pulsa uma luz azul com runas que mudam com o tempo.',
+            text: 'Ao tocar no relógio enferrujado, engrenagens pulsam com o ponteiro indicando um beco. Um compartimento se abre, revelando uma chave que pulsa uma luz azul com runas que mudam com o tempo.',
             choices: [
                 { text: 'Pegar a chave', next: 5 },
                 { text: 'Ignorar e voltar', next: 1 },
-                { text: 'Estudar as engrenagens ao redor', next: 20 }
+                { text: 'Estudar as engrenagens ao redor e seguir ao beco', next: 35 }
             ]
         },
         {
@@ -613,10 +612,487 @@
             choices: [
                 { text: 'Mostrar o bilhete para alguém', next: 7 },
                 { text: 'Guardar o bilhete e ficar alerta', next: 1 },
-                { text: 'Tentar encontrar quem escreveu o bilhete', next: 18 }
+                { text: 'se esconder', next: 36 }
             ]
-        }
-    ];
+        },
+        {
+            bg: 'diagramas.png',
+            text: 'você sente um tremor das maquinas da regnum escuta uma grande marcha com um arrastar de jaulas e monstros gritando de dor,',
+            choices: [
+                { text: 'Seguir os passos dos soldados ', next: 54 },
+                { text: 'Esconder-se nas sombras', next: 37 },
+                { text: 'Gritar para revelar quem anda aí e correr ate a praça', next: 1 }
+            ]
+  },
+  // 35
+  {
+    bg: 'estranho.png',
+    text: 'Você chega a um beco onde grafites antigos narram histórias de rebeldes esquecidos e uma porta metálica semiaberta escapa faíscas.',
+    choices: [
+      { text: 'Entrar na porta', next: 37 },
+      { text: 'Ler os grafites com atenção', next: 38 },
+      { text: 'Voltar para a praça central', next: 1 }
+    ]
+  },
+  // 36
+  {
+    bg: 'diagramas.png',
+    text: 'Escondido, percebe um vulto encapuzado que manipula um necrocristal fresco e de repente ele enfia o necrocristal no peito.... sai 2 vozes a de um homem e um rugido de um animal ele fica com fogo por todo o corpo...',
+    choices: [
+      { text: 'Tentar ouvir a conversa dele com o animal mistico', next: 39 },
+      { text: 'Sair do esconderijo e se apresentar', next: 40 },
+      { text: 'Retornar discretamente para a praça', next: 1 }
+    ]
+  },
+  // 37
+  {
+    bg: 'fundo.png',
+    text: 'Dentro da oficina você encontra vários automatos e partes de um traje da regnum .',
+    choices: [
+      { text: 'estudar a cena sem acordar os automatos', next: 41 },
+      { text: 'Procurar por armas ocultas', next: 42 },
+      { text: 'Sair da oficina e voltar com medo', next: 35 }
+    ]
+  },
+  // 38
+  {
+    bg: 'glichtfinal.png',
+    text: 'Os grafites contam de uma rebelião há muito tempo enterrada com a imagem de uma mulher muito parecida com você, onde o povo lutou contra o regime tecnocrata com a ajuda de um artefato chamado “Coração de Ferro”.',
+    choices: [
+      { text: 'Procurar o Coração de Ferro', next: 43 },
+      { text: 'Investigar mais sobre a rebelião', next: 44 },
+      { text: 'Voltar para a praça central', next: 1 }
+    ]
+  },
+  // 39
+  {
+    bg: 'estranho.png',
+    text: 'Você escuta fragmentos: “Necrocristal... o dr anemoi prescisa saber... não podemos deixar que a Regnum descubra...” o animal toma conta do homem e o vulto desaparece.',
+    choices: [
+      { text: 'Seguir o vulto', next: 45 },
+      { text: 'Ir para a area de vagoes', next: 32 },
+      { text: 'Voltar para praça central', next: 1 }
+    ]
+  },
+  // 40
+  {
+    bg: 'fundoclaro.png',
+    text: 'O vulto volta vira para você e abre o peito mostrando planetas e toda a historia do mundo de raizes de cobre {terra}',
+    choices: [
+      { text: 'Aceitar aliança', next: 47 },
+      { text: 'Desconfiar e recusar e correr a praça gritando', next: 1 },
+      { text: 'correr aos vagões', next: 32 }
+    ]
+  },
+  // 41
+  {
+    bg: 'finalprota.png',
+    text: 'você vê um homem ou o que ja foi um homem ele e um automato o protegendo ele ate hoje com as articulações enferrujadas por ele estar ha anos na mesma posição',
+    choices: [
+      { text: 'salvar ele', next: 49 },
+      { text: 'escolher ligar ele', next: 50 },
+      { text: 'Decidir não mexer nele', next: 51 }
+    ]
+  },
+  // 42
+  {
+    bg: 'regnum.png',
+    text: 'Entre armas estranhas, encontra um machado com uma lamina linda',
+    choices: [
+      { text: 'Pegar o machado gigante ', next: 52 },
+      { text: 'Pegar a lâmina de necrocristal', next: 53 },
+      { text: 'Não levar nada e sair', next: 35 }
+    ]
+  },
+  // 43
+  {
+    bg: 'favcon.png',
+    text: 'Buscando o Coração de Ferro, você vê uma imagem de metalion que cria vida e diz em sua forma humana:-Eryon o que você pode fazer com o mundo mostra o porque da sua marca, faça a regnum sucumbir',
+    choices: [
+      { text: 'Tentar abrir a caixa', next: 54 },
+      { text: 'Levar a caixa para o inventor', next: 2 },
+      { text: 'Deixar a caixa e voltar', next: 1 }
+    ]
+  },
+  // 44
+  {
+    bg: 'regnum.png',
+    text: 'Na biblioteca esquecida, manuscritos revelam histórias sombrias do passado, de traições e segredos escondidos entre as engrenagens da história.',
+    choices: [
+      { text: 'Ler sobre a traição do inventor', next: 8 },
+      { text: 'Procurar por pistas sobre os artefatos', next: 25 },
+      { text: 'Sair da biblioteca e voltar', next: 1 }
+    ]
+  },
+  // 45
+  {
+    bg: 'diagramas.png',
+    text: 'Você persegue o vulto pelas vielas tortuosas, até que uma armadilha de mecanismos explode, prendendo você em uma gaiola com um animal que choraminga com muitos machucados.',
+    choices: [
+      { text: 'Tentar escapar da gaiola liberando o animal', next: 55 },
+      { text: 'Gritar por ajuda', next: 36 },
+      { text: 'Aceitar seu destino por enquanto', next: 51 }
+    ]
+  },
+  // 46
+  {
+    bg: 'estranho.png',
+    text: 'O automato tem um botão vermelho e um visor que mostra uma contagem regressiva com a frase "Rever e proteger ele o mestre em :".',
+    choices: [
+      { text: 'Pressionar o botão vermelho', next: 56 },
+      { text: 'Desmontar o dispositivo para entender', next: 57 },
+      { text: 'Guardar o dispositivo e fugir', next: 1 }
+    ]
+  },
+  // 47
+  {
+    bg: 'regnumin.png',
+    text: 'Com Lira ao seu lado, vocês traçam um plano para infiltrar a sede da Regnum e libertar os cadavernius e os outros animais misticos.',
+    choices: [
+      { text: 'Executar o plano imediatamente', next: 58 },
+      { text: 'Buscar mais aliados na cidade', next: 59 },
+      { text: 'Voltar para preparar equipamentos', next: 35 }
+    ]
+  },
+  // 48
+  {
+    bg: 'regnumin.png',
+    text: 'Desconfiado, você decide seguir seus próprios passos, mas sente o peso da solidão crescendo a cada engrenagem que gira.',
+    choices: [
+      { text: 'Buscar respostas sozinho', next: 60 },
+      { text: 'Tentar convencer a Rsistecia depois', next: 40 },
+      { text: 'Voltar para a praça', next: 1 }
+    ]
+  },
+  // 49
+  {
+    bg: 'glichtfinal.png',
+    text: 'salvar foi uma pesima ideia ele começa a gritar e correr até você',
+    choices: [
+      { text: 'Aceitar as consequências', next: 61 },
+      { text: 'Tentar desfazer a alteração e apagar ele para sempre', next: 51 }
+    ]
+  },
+  // 50
+  {
+    bg: 'glichtfinal.png', // ligar
+    text: 'ele te olha pedindo piedade e você sente o seu corpo enfraquecer.........e ele ameaça destruir a sanidade de quem o observa.',
+    choices: [
+      { text: 'Enfrentar o caos de frente ir e salvar não só o corpo mas a alma', next: 62 },
+      { text: 'lutar com o machado ou lamina', next: 51 }
+    ]
+  },
+  // 51
+  {
+    bg: 'glichtfinal.png', //n mecher
+    text: 'você olha o corpo dele ele lutou demais para proteger o mestre dele...... você senta com ele e reflete o que e por que ele e você estão aqui em ferruvia...',
+    choices: [
+      { text: 'Refletir sobre o destino', next: 0 },
+      { text: 'Buscar um novo caminho', next: 35 }
+    ]
+  },
+  // 52
+  {
+    bg: 'pistola.png',
+text: 'O machado vibra em sua mão e você sente sua pele se fundir com o metal dele atendendo ao seu chamado, carregada com a ira de matalion pura, pronta para rasgar o véu da realidade.',
+choices: [
+{ text: 'cair para cima da regnum', next: 63 },
+{ text: 'recomeçar', next: 0 }
+]
+},
+// 53
+{
+bg: 'floresta.png',
+text: 'A lâmina pulsa com energia escura, quase viva, como se quisesse sussurrar segredos sombrios em seu ouvido e uma mulher chamda ivirik aparece e te mostra o futuro cheio de dor e odio.',
+choices: [
+{ text: 'Empunhar a lâmina', next: 64 },
+{ text: 'Guardar para emergências', next: 35 }
+]
+},
+// 54 parei aqui
+{
+bg: 'floresta.png',
+text: 'Ao tentar abrir, símbolos brilham e um campo de energia surge, testando sua força de vontade e determinação.',
+choices: [
+{ text: 'Concentrar-se e tentar abrir', next: 65 },
+{ text: 'Desistir e deixar a caixa para o inventor', next: 2 }
+]
+},
+// 55
+{
+bg: 'diagramas.png',
+text: 'na gaiola o seu novo companheiro te chama para te aquecer.... ele treme de medo de acabar como seus pais e avos',
+choices: [
+{ text: 'Focar no presente para escapar', next: 66 },
+{ text: 'Usar conhecimento do futuro para se libertar', next: 67 }
+]
+},
+// 56
+{
+bg: 'dispositivo_ativado.png',
+text: 'O dispositivo dispara uma onda temporal que distorce o espaço ao seu redor, abrindo um portal para uma Ferrúvia alternativa.',
+choices: [
+{ text: 'Entrar no portal', next: 68 },
+{ text: 'Desligar o dispositivo e fugir', next: 1 }
+]
+},
+// 57
+{
+bg: 'dispositivo_aberto.png',
+text: 'Dentro, engrenagens minúsculas e cristais vibrantes revelam um mecanismo que controla o fluxo temporal local.',
+choices: [
+{ text: 'Tentar controlar o fluxo', next: 69 },
+{ text: 'Destruir o dispositivo', next: 70 },
+{ text: 'Guardar para análise', next: 1 }
+]
+},
+// 58
+{
+bg: 'infiltração.png',
+text: 'O plano em ação: sombras, fios elétricos e passos sincronizados. O futuro de Ferrúvia depende da sua precisão e coragem.',
+choices: [
+{ text: 'Avançar com cautela', next: 71 },
+{ text: 'Atacar de surpresa', next: 72 },
+{ text: 'Recusar o plano e fugir', next: 1 }
+]
+},
+// 59
+{
+bg: 'cidade.png',
+text: 'Na cidade, rostos cansados mas cheios de esperança se unem para uma causa maior. Alianças se formam no calor das ruas e bares.',
+choices: [
+{ text: 'Recrutar um ex-militar', next: 73 },
+{ text: 'Buscar o hacker lendário', next: 74 },
+{ text: 'Voltar para a sede', next: 47 }
+]
+},
+// 60
+{
+bg: 'ruasdia.png',
+text: 'Andando sozinho pelas ruas, você sente os olhos do passado e futuro observando, como se a cidade respirasse junto com você.',
+choices: [
+{ text: 'Investigar a fábrica abandonada', next: 75 },
+{ text: 'Buscar pistas na biblioteca', next: 44 },
+{ text: 'Parar para pensar na praça', next: 1 }
+]
+},
+// 61
+{
+bg: 'calmaria.png',
+text: 'O silêncio que sucede a alteração é um sussurro que promete renascimento e destruição numa mesma respiração.',
+choices: [
+{ text: 'Abraçar o novo ciclo', next: 76 },
+{ text: 'Procurar um modo de equilibrar', next: 77 }
+]
+},
+{ // novo terminar de fazer amanhâ
+id: 62,
+bg: 'diagramas.png',
+text: 'Explorando a zona neutra, você encontra seres de outras dimensões, e um poder estranho que pode alterar o destino de Ferrúvia para sempre.',
+choices: [
+{ text: 'Aproximar-se dos seres', next: 80 },
+{ text: 'Fugir da zona neutra', next: 13 }
+]
+},
+{
+id: 63,
+bg: 'floresta.png',
+text: 'Continuando a luta pela utopia, você descobre que o equilíbrio entre máquina e natureza é mais frágil do que pensava, e o futuro é incerto.',
+choices: [
+{ text: 'Persistir na luta', next: 81 },
+{ text: 'Buscar uma trégua', next: 0 }
+]
+},
+{
+id: 64,
+bg: 'floresta.png',
+text: 'Buscando esperança na distopia, você encontra aliados inesperados que ajudam a reacender a chama da humanidade na cidade fria.',
+choices: [
+{ text: 'Formar alianças', next: 82 },
+{ text: 'Desistir de tudo', next: 0 }
+]
+},
+{
+id: 65,
+bg: 'favcon.png',
+text: 'Aproveitando a viagem no trem do tempo, você passa por eras distorcidas e realidades fragmentadas, sentindo o pulso do universo bater forte.',
+choices: [
+{ text: 'Seguir viagem', next: 83 },
+{ text: 'Pular do trem', next: 0 }
+]
+},
+{
+id: 66,
+bg: 'favcon.png',
+text: 'Tentando controlar o trem, você se perde em linhas temporais conflitantes, e o risco de se perder para sempre aumenta a cada curva.',
+choices: [
+{ text: 'Continuar tentando', next: 84 },
+{ text: 'Desistir e pular', next: 0 }
+]
+},
+{
+id: 67,
+bg: 'glichtfinal.png',
+text: 'Explorando as realidades paralelas, você encontra versões suas que desafiam o conceito de identidade e realidade, questionando o que é ser você mesmo.',
+choices: [
+{ text: 'Interagir com as versões', next: 85 },
+{ text: 'Fugir para a realidade', next: 2 }
+]
+},
+{
+id: 68,
+bg: 'estranho.png',
+text: 'Seguindo os segredos do diário, você encontra um caminho oculto para manipular o necrocristal e mudar o curso da história de Ferrúvia.',
+choices: [
+{ text: 'Seguir o caminho oculto', next: 86 },
+{ text: 'Ignorar e voltar', next: 0 }
+]
+},
+{
+id: 69,
+bg: 'estranho.png',
+text: 'Seguindo o mapa, você descobre lugares proibidos e perigosos que podem alterar o equilíbrio do tempo, numa dança de risco e esperança.',
+choices: [
+{ text: 'Explorar os lugares', next: 87 },
+{ text: 'Voltar para a cidade', next: 0 }
+]
+},
+{
+id: 70,
+bg: 'resistencia.png',
+text: 'Aceitando o destino, você se funde ao tempo, tornando-se lenda e sussurro entre as engrenagens que nunca param.',
+choices: [
+{ text: 'Recomeçar a história', next: 0 }
+]
+},
+{
+id: 71,
+bg: 'resistencia.png',
+text: 'Continuando a tentar consertar o paradoxo, você se perde num ciclo infinito, uma espiral que desafia até a sanidade do tempo.',
+choices: [
+{ text: 'Persistir na loucura', next: 71 },
+{ text: 'Aceitar o fim', next: 70 }
+]
+},
+{
+id: 72,
+bg: 'resistencia.png',
+text: 'Seguindo a revolução, você lidera Ferrúvia para um novo amanhecer, com esperança e fogo nas veias.',
+choices: [
+{ text: 'Continuar a revolução', next: 88 },
+{ text: 'Repensar a luta', next: 56 }
+]
+},
+{
+id: 73,
+bg: 'resistencia.png',
+text: 'Na sombra da sabotagem, você desvia o curso da história e semeia o caos na ordem estabelecida.',
+choices: [
+{ text: 'Prosseguir com a sabotagem', next: 89 },
+{ text: 'Desistir e sumir', next: 0 }
+]
+},
+{
+id: 74,
+bg: 'glichtfinal.png',
+text: 'Abraçando o poder, você se torna uma entidade temporal, um fantasma que vagueia entre mundos, preso na solidão do infinito.',
+choices: [
+{ text: 'Explorar o infinito', next: 90 },
+{ text: 'Buscar redenção', next: 0 }
+]
+},
+{
+id: 75,
+bg: 'diagramas.png',
+text: 'Continuando a melodia, você abre portais para outras dimensões, mas seu corpo começa a se desfazer em acordes instáveis.',
+choices: [
+{ text: 'Persistir na música', next: 91 },
+{ text: 'Parar antes do fim', next: 4 }
+]
+},
+{
+id: 76,
+bg: 'diagramas.png',
+text: 'Na batalha com o agente, você enfrenta seu próprio destino e descobre a verdade oculta por trás das engrenagens de Ferrúvia.',
+choices: [
+{ text: 'Vencer a batalha', next: 92 },
+{ text: 'Ceder à escuridão', next: 93 }
+]
+},
+{
+id: 77,
+bg: 'diagramas.png',
+text: 'Aceitando os planos sombrios, você se torna cúmplice da manipulação temporal, vivendo na penumbra do poder e do medo.',
+choices: [
+{ text: 'Seguir com os planos', next: 94 },
+{ text: 'Rebelar-se contra eles', next: 78 }
+]
+},
+{
+id: 78,
+bg: 'diagramas.png',
+text: 'Rebelando-se contra os planos, você começa a escrever um novo destino, uma narrativa própria que desafia o controle do tempo.',
+choices: [
+{ text: 'Escrever sua história', next: 95 },
+{ text: 'Aceitar o destino', next: 77 }
+]
+},
+{
+id: 79,
+bg: 'estranho.png',
+text: 'Atravessando os portais, você encontra o coração do tempo pulsando, uma força viva que pode criar ou destruir universos inteiros.',
+choices: [
+{ text: 'Abraçar o coração', next: 96 },
+{ text: 'Fugir do portal', next: 11 }
+]
+},
+{
+id: 80,
+bg: 'diagramas.png',
+text: 'Aproximando-se dos seres, você sente uma energia que transcende o físico, um elo que pode libertar ou aprisionar Ferrúvia para sempre.',
+choices: [
+{ text: 'Confiar nos seres', next: 97 },
+{ text: 'Desconfiar e fugir', next: 13 }
+]
+},
+{
+id: 81,
+bg: 'floresta.png',
+text: 'Persistindo na luta, você percebe que a utopia é um sonho frágil, e que a verdadeira mudança exige sacrifícios amargos e coragem infinita.',
+choices: [
+{ text: 'Continuar a luta', next: 98 },
+{ text: 'Buscar outro caminho', next: 0 }
+]
+},
+{
+id: 82,
+bg: 'floresta.png',
+text: 'Formando alianças, você fortalece a esperança entre as ruínas da distopia, uma chama que pode reacender a humanidade em Ferrúvia.',
+choices: [
+{ text: 'Continuar formando alianças', next: 99 },
+{ text: 'Desistir e aceitar', next: 0 }
+]
+},
+{
+id: 83,
+bg: 'favcon.png',
+text: 'Seguindo viagem, você vê o tempo se dobrar em curvas impossíveis, e o destino da cidade depende da sua próxima parada.',
+choices: [
+{ text: 'Seguir viagem', next: 100 },
+{ text: 'Sair do trem', next: 0 }
+]
+},
+{
+id: 84,
+bg: 'favcon.png',
+text: 'Continuando a tentar controlar o trem, você perde o controle e se encontra preso em um loop temporal que pode durar para sempre.',
+choices: [
+{ text: 'Tentar de novo', next: 84 },
+{ text: 'Desistir e sair', next: 0 }
+]
+}
+];
+
 
     let currentScene = 0;
 
@@ -691,3 +1167,4 @@ window.onload = () => renderScene(currentScene);
 </script>
 </body>
 </html>
+
