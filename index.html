@@ -20,6 +20,46 @@
             color: #f0e7d8;
             overflow: hidden;
         }
+        #map-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 220px;
+            background: rgba(0,0,0,0.7);
+            padding: 15px;
+            border-radius: 10px;
+            color: #fff;
+            font-family: 'Courier New', Courier, monospace;
+            z-index: 1000;
+        }
+
+        #map {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .map-node {
+            width: 30px;
+            height: 30px;
+            background: #555;
+            border-radius: 50%;
+            border: 2px solid #888;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .map-node.visited {
+            background: #ff6f61;
+            border-color: #fff;
+        }
+
+        .map-node.current {
+            background: #ffd700;
+            border-color: #fff;
+            box-shadow: 0 0 8px #ffd700;
+        }
 
         #game {
             position: relative;
@@ -204,15 +244,24 @@
     </style>
 </head>
 <body>
-    <div id="game">
-        <div class="background" id="background"></div>
-             <div id="codec-container">
-              <div class="message" id="msg"></div>
-              <div class="speaker" id="speaker"></div>
-            </div>
-        <div class="dialogue-box" id="dialogue"></div>
-        <div class="choices" id="choices"></div>
+<div id="game"> 
+    <div class="background" id="background"></div>
+    <div id="codec-container">
+        <div class="message" id="msg"></div>
+        <div class="speaker" id="speaker"></div>
     </div>
+    <div class="dialogue-box" id="dialogue"></div>
+    <div class="choices" id="choices"></div>
+</div>
+
+<!-- Container do mapa separado, fixo na tela -->
+<summary>sua jornada
+<details id="map-container">
+  <h3>Mapa da Jornada</h3>
+  <div id="map"></div>
+</details></summary>
+
+
 <style>
 
     #codec-container {
@@ -291,7 +340,8 @@
     const choicesContainer = document.getElementById('choices');
     const background = document.getElementById('background');
     const gameContainer = document.getElementById('game');
-
+const choicesEl = document.getElementById('choices');
+const mapEl = document.getElementById('map');
     const scenes = [
   {
     bg: 'regnum.png',
@@ -619,7 +669,7 @@
     bg: 'diagramas.png',
     text: 'Você sente um tremor vindo das máquinas da Regnum e escuta o som de uma grande marcha, acompanhada pelo arrastar de jaulas e gritos de dor de criaturas desconhecidas.',
     choices: [
-      { text: 'Seguir os passos dos soldados da Regnum para investigar', next: 57 },
+      { text: 'Seguir os passos dos soldados da Regnum para investigar', next: 60 },
       { text: 'Tentar se esconder nas sombras para evitar ser notado', next: 37 },
       { text: 'Gritar para revelar quem está se aproximando e correr para a praça', next: 1 }
     ]
@@ -629,7 +679,7 @@
     bg: 'estranho.png',
     text: 'Você chega a um beco estreito onde grafites antigos narram histórias de rebeldes esquecidos. Uma porta metálica semiaberta emite faíscas intermitentes.',
     choices: [
-      { text: 'Entrar pela porta metálica semiaberta', next: 37 },
+      { text: 'Entrar pela porta metálica semiaberta', next: 60 },
       { text: 'Ler os grafites antigos com atenção em busca de significado', next: 38 },
       { text: 'Voltar para a segurança da praça central', next: 1 }
     ]
@@ -985,21 +1035,26 @@ choices: [
 }
 ];
 
-    let currentScene = 0;
+  // Variáveis dos elementos que tu tem no HTML
 
-    let typewriterTimeouts = [];
 
+
+let currentSceneIndex = 0;
+const visitedScenes = new Set();
+let typewriterTimeouts = [];
+
+// Limpa timeouts do typewriter pra não acumular bagulho
 function clearTypewriter() {
     typewriterTimeouts.forEach(timeout => clearTimeout(timeout));
     typewriterTimeouts = [];
 }
 
+// Máquina de escrever na div #dialogue
 function typeWriter(text, i = 0) {
     if (i === 0) {
         dialogue.textContent = '';
-        clearTypewriter(); // Cancela qualquer digitação anterior
+        clearTypewriter();
     }
-
     if (i < text.length) {
         dialogue.textContent += text.charAt(i);
         const timeout = setTimeout(() => typeWriter(text, i + 1), 25);
@@ -1007,54 +1062,89 @@ function typeWriter(text, i = 0) {
     }
 }
 
-function renderScene(index) {
-    const scene = scenes[index];
-    currentScene = index;
+// Renderiza a cena atual
+function renderScene() {
+    const scene = scenes[currentSceneIndex];
+    visitedScenes.add(currentSceneIndex);
+    updateMap();
 
     fadeOut(() => {
-        // Troca o fundo primeiro
         background.style.backgroundImage = `url('${scene.bg}')`;
 
-        // Limpa escolhas
-        choicesContainer.innerHTML = '';
+        choicesEl.innerHTML = '';
 
-        // Recria botões de escolha
         scene.choices.forEach(choice => {
-            const btn = document.createElement('div');
+            const btn = document.createElement('button');
             btn.className = 'choice';
             btn.textContent = choice.text;
-            btn.onclick = () => renderScene(choice.next);
-            choicesContainer.appendChild(btn);
+            btn.onclick = () => {
+                currentSceneIndex = choice.next;
+                renderScene();
+            };
+            choicesEl.appendChild(btn);
         });
 
-        // Aplica o efeito de digitação após fade-out
         typeWriter(scene.text);
-
-        // Reaparece com fade-in
         fadeIn();
     });
 }
 
-// Função de fade-out
+function updateMap() {
+    // Remove classes antigas
+    mapEl.querySelectorAll('.map-node').forEach(node => {
+        node.classList.remove('visited', 'current');
+    });
+
+    visitedScenes.forEach(id => {
+        const node = mapEl.querySelector(`.map-node[data-id="${id}"]`);
+        if (node) node.classList.add('visited');
+    });
+
+    const currentNode = mapEl.querySelector(`.map-node[data-id="${currentSceneIndex}"]`);
+    if (currentNode) currentNode.classList.add('current');
+}
+
+// Navega direto pra cena clicada no mapa
+function goToScene(index) {
+    currentSceneIndex = index;
+    renderScene();
+}
+
+// Cria os nodes no mapa, liga cada node ao id da cena
+function createMapNodes() {
+    scenes.forEach(scene => {
+        const node = document.createElement('div');
+        node.classList.add('map-node');
+        node.dataset.id = scene.id;
+        node.title = scene.title; // Dica no hover
+        node.addEventListener('click', () => goToScene(scene.id));
+        mapEl.appendChild(node);
+    });
+}
+
+// Fade in/out só dar um grau na transição
 function fadeOut(callback) {
     gameContainer.style.opacity = 0;
     setTimeout(callback, 500);
 }
-
-// Função de fade-in
 function fadeIn() {
     gameContainer.style.opacity = 1;
 }
 
-// Reiniciar o jogo ao pressionar 'R'
-document.addEventListener('keydown', (event) => {
-    if (event.key.toLowerCase() === 'r') {
-        renderScene(0);
+// Resetar o jogo apertando R
+document.addEventListener('keydown', (e) => {
+    if (e.key.toLowerCase() === 'r') {
+        currentSceneIndex = 0;
+        renderScene();
     }
 });
 
-window.onload = () => renderScene(currentScene);
+// Inicializa o mapa e começa o jogo
+createMapNodes();
+renderScene();
+
 
 </script>
 </body>
 </html>
+
